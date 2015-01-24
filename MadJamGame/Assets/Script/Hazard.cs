@@ -30,13 +30,14 @@ public class Hazard : MonoBehaviour {
 		if(Damage == 0f)Damage = 1f;
 		if(player == null)player = GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>();
 		
+		//Initialize this hazard in the hazard checker
 		HazardChecker.Instance.AddHazard(h_name, TimeToFailure);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		//Turn the hazards on
+		//Try to turn the hazards on if they're off
 		if(!isActive){
 			TryToSpawn += Time.deltaTime;
 			if(TryToSpawn > SpawnSpamLimiter){
@@ -52,6 +53,9 @@ public class Hazard : MonoBehaviour {
 			player.TakeDamage(Damage);
 			TimeActive = 0f;
 			if(!Recurring)isActive = false;
+			else{
+				HazardChecker.Instance.SetHazardCountDown(h_name, TimeToFailure);
+			}
 		}
 		
 		
