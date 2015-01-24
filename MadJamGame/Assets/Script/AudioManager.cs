@@ -32,9 +32,9 @@ public class AudioManager : MonoBehaviour {
 		if(FXMuted) return;
 		//Continue
   
-        //currently randomely selects from the clip array
-        FXSource.clip = clip;
-        FXSource.Play();
+            //currently randomely selects from the clip array
+            FXSource.clip = clip;
+            FXSource.Play();
 	}
 	
 	public void PlayMusic(){
