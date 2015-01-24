@@ -4,6 +4,7 @@ using System.Collections;
 public class Hazard : MonoBehaviour {
 	
 	public bool isActive = false;
+	public string h_name;
 	
 	//Timer variables
 	public float SpawnSpamLimiter = 0.1f;
@@ -24,15 +25,19 @@ public class Hazard : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//These should be set in the inspecter, but if they weren't default them here
+		if(h_name == "")h_name = "Unnamed";
 		if(TimeToFailure == 0f)TimeToFailure = 5f;
 		if(Damage == 0f)Damage = 1f;
 		if(player == null)player = GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>();
+		
+		//Initialize this hazard in the hazard checker
+		HazardChecker.Instance.AddHazard(h_name, TimeToFailure);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		//Turn the hazards on
+		//Try to turn the hazards on if they're off
 		if(!isActive){
 			TryToSpawn += Time.deltaTime;
 			if(TryToSpawn > SpawnSpamLimiter){
@@ -48,6 +53,9 @@ public class Hazard : MonoBehaviour {
 			player.TakeDamage(Damage);
 			TimeActive = 0f;
 			if(!Recurring)isActive = false;
+			else{
+				HazardChecker.Instance.SetHazardCountDown(h_name, TimeToFailure);
+			}
 		}
 		
 		
@@ -58,7 +66,7 @@ public class Hazard : MonoBehaviour {
 			int i = Random.Range(1, 101);
 			if(i <= SpawnChance){
 				isActive = true;
-				HazardChecker.Instance.SpawnHazard();
+				HazardChecker.Instance.SpawnHazard(h_name);
 			}
 		}
 	}
