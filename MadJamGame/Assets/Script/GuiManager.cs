@@ -26,6 +26,7 @@ public class GuiManager : MonoBehaviour {
 	public void OnPressPlay(){
 		TitleScreen.SetActive(false);
 		TutorialScreen.SetActive(true);
+		GameScreen.SetActive(true);
 	}
 	
 	public void OnEnterGameplay(){
