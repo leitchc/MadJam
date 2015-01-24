@@ -53,5 +53,7 @@ public class GuiManager : MonoBehaviour {
 		DeathScreen.SetActive(false);
 		GameScreen.SetActive(false);
 		TitleScreen.SetActive(true);
+		Ship tmp = GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>();
+		tmp.HPRefil();
 	}
 }

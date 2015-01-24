@@ -18,12 +18,21 @@ public class Ship : MonoBehaviour {
 	
 	public void TakeDamage(float Damage){
 		HP -= Damage;
-		if(HP <= 0f){
-			GuiManager.Instance.PlayerDeath();
-		}
+		CheckDead();
 	}
 	
 	public void HPRefil(){
 		HP = MaxHP;
+	}
+	
+	void OnTriggerEnter(Collider col){
+		HP -= 10;
+		CheckDead();
+	}
+	
+	public void CheckDead(){
+		if(HP <= 0f){
+			GuiManager.Instance.PlayerDeath();
+		}
 	}
 }
