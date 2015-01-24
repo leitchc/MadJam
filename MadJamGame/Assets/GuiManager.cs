@@ -2,14 +2,34 @@
 using System.Collections;
 
 public class GuiManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
 	
+	public GameObject TitleScreen;
+	public GameObject GameScreen;
+	public GameObject DeathScreen;
+	public GameObject TutorialScreen;
+	
+	private static GuiManager instance = null;
+	public static GuiManager Instance {get {return instance; }}
+	
+	void Awake () {
+		// Required for singleton
+		instance = this;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Start(){
+		if(TitleScreen != null)TitleScreen.SetActive(true);
+		if(GameScreen != null)GameScreen.SetActive(false);
+		if(DeathScreen != null)DeathScreen.SetActive(false);
+		if(TutorialScreen != null)TutorialScreen.SetActive(false);
+	}
 	
+	public void OnPressPlay(){
+		TitleScreen.SetActive(false);
+		TutorialScreen.SetActive(true);
+	}
+	
+	public void OnEnterGameplay(){
+		TutorialScreen.SetActive(false);
+		GameScreen.SetActive(true);
 	}
 }
