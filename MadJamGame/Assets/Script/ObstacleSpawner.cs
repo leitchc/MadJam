@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ObstacleSpawner : MonoBehaviour {
 
@@ -13,11 +14,14 @@ public class ObstacleSpawner : MonoBehaviour {
 	public bool spawnAsteroids = true;
 	public bool spawnShips = true;
 	
+	public static Queue<Transform> alienShips;
+
 	private float timer;	// Timer for spawning spawnees
 
 	// Use this for initialization
 	void Awake() {
 		timer = Time.time + rateOfSpawn;
+		alienShips = new Queue<Transform>();
 	}
 	
 	// Update is called once per frame
@@ -36,9 +40,20 @@ public class ObstacleSpawner : MonoBehaviour {
 					new Vector3(Random.Range(xMin, xMax), transform.position.y, transform.position.z), Quaternion.identity) as Transform;
 
 				ship.GetComponent<AlienShip>().target = target;
+				alienShips.Enqueue(ship);
 			}
 
 			timer = Time.time + rateOfSpawn;
+		}
+	}
+
+	// Honk at one of the ships
+	public void HonkShip() {
+		if(alienShips.Count > 0) {
+			Transform alienShip = alienShips.Dequeue();
+			if(alienShip != null) {
+				alienShip.GetComponent<AlienShip>().Honk();
+			}
 		}
 	}
 }
