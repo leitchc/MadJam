@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveTowards : MonoBehaviour {
+public class Asteroid : MonoBehaviour {
 
 	public Transform target;
 	public GameObject explosion;

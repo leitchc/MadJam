@@ -25,7 +25,7 @@ public class AsteroidSpawner : MonoBehaviour {
 		if(timer < Time.time) {
 			Transform asteroid = Instantiate(spawnees[Random.Range(0, 3)], 
 				new Vector3(Random.Range(xMin, xMax), transform.position.y, transform.position.z), Quaternion.identity) as Transform;
-			asteroid.GetComponent<MoveTowards>().target = target;
+			asteroid.GetComponent<Asteroid>().target = target;
 			asteroid.GetChild(0).GetComponent<Tumble>().tumbleSpeed = Random.Range(1.0f, 5.0f);
 
 			timer = Time.time + rateOfSpawn;

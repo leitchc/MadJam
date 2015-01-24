@@ -6,6 +6,8 @@ public class Hazard : MonoBehaviour {
 	public bool isActive = false;
 	
 	//Timer variables
+	public float SpawnSpamLimiter = 0.1f;
+	public float TryToSpawn = 0f;
 	public float TimeToFailure;
 	public float TimeActive = 0f;
 	
@@ -29,8 +31,16 @@ public class Hazard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
 		//Turn the hazards on
-		if(!isActive)Activate();
+		if(!isActive){
+			TryToSpawn += Time.deltaTime;
+			if(TryToSpawn > SpawnSpamLimiter){
+				Activate();
+				TryToSpawn = 0f;
+			}
+		}
+		
 		if(!isActive)return;
 		
 		TimeActive += Time.deltaTime;
@@ -48,8 +58,8 @@ public class Hazard : MonoBehaviour {
 			int i = Random.Range(1, 101);
 			if(i <= SpawnChance){
 				isActive = true;
+				HazardChecker.Instance.SpawnHazard();
 			}
-			HazardChecker.Instance.SpawnHazard();
 		}
 	}
 }
