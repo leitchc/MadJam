@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -12,7 +13,7 @@ public class HazardChecker : MonoBehaviour {
 	private static Dictionary<string, string> buttonAffects = new Dictionary<string, string>();
 	private static Dictionary<string, bool> buttons = new Dictionary<string, bool>();
 
-	private static List<string> failureList = new List<string>();
+	private static Queue<string> failureList = new Queue<string>();
 
 	private static Dictionary<string, float> hazardCountDown = new Dictionary<string, float>();
 	private static Dictionary<string, float> hazardDuration = new Dictionary<string, float>();
@@ -25,9 +26,17 @@ public class HazardChecker : MonoBehaviour {
 	// Howmany mistakes you're allowed to do until Game Over.
 	public int ChancesTillLose = 0;
 
+	void Awake () {
+		hazardObj = this;
+	}
+
+	public Text stuff;
+
     // Use this for initialization
-    void Awake () {
-        hazardObj = this;
+    void Start () {
+		// A test.
+		//HazardChecker.Instance.AddHazard("no sleep", 15.0f);
+		//HazardChecker.Instance.SetHazardState("no sleep", true);
     }
 
 	//------------------- Check if Exist methods -------------------
@@ -39,7 +48,7 @@ public class HazardChecker : MonoBehaviour {
 
 	// Checks if button exists in internal dictionary, true if it exist, false if it does not.
 	public bool ButtonExist(string buttonName) {
-		return hazards.ContainsKey(buttonName);
+		return buttons.ContainsKey(buttonName);
 	}
 
 	// Check if the failure list contains something, if so GAME OVER!
@@ -58,25 +67,43 @@ public class HazardChecker : MonoBehaviour {
 		return Convert.ToInt32(hazards[hazardName]);
 	}
 
+	// Set hazard  active or not (true or false respectively)
+	// If given hazard does not exist it will return -1
+	public int SetHazardState(string hazardName, bool active) {
+		if(!hazards.ContainsKey(hazardName))
+			return -1;
+		hazards[hazardName] = active;
+		return 0;
+	}
+
 	// Get button if it is pressed or not (true or false respectively)
 	// Makes use of Convert.ToInt32 which returns 1 when true and 0 when false.
 	// If given button does not exist it will return -1
 	public int GetButtonState(string buttonName) {
-		if(!hazards.ContainsKey(buttonName))
+		if(!buttons.ContainsKey(buttonName))
 			return -1;
-		return Convert.ToInt32(hazards[buttonName]);
+		return Convert.ToInt32(buttons[buttonName]);
+	}
+
+	// Set button pressed or not (true or false respectively)
+	// If given button does not exist it will return -1
+	public int SetButtonState(string buttonName, bool pressed) {
+		if(!buttons.ContainsKey(buttonName))
+			return -1;
+		buttons[buttonName] = pressed;
+		return 0;
 	}
 
 	// Returns which hazard the button has an effect on. 
 	// If given button does not exist it will return an empty string ""
 	public string ButtonAffectsWhichHazard(string buttonName) {
-		if(!hazards.ContainsKey(buttonName))
+		if(!buttonAffects.ContainsKey(buttonName))
 			return "";
 		return buttonAffects[buttonName];
 	}
 
 	// Returns Max duration time of hazard.
-	// If given hazard does not exist it will return -1
+	// If given hazard does not exist it will return -1.0f
 	public float GetHazardDuration(string hazardName) {
 		if(!hazardDuration.ContainsKey(hazardName))
 			return -1.0f;
@@ -84,11 +111,20 @@ public class HazardChecker : MonoBehaviour {
 	}
 
 	// Returns current countdown time of hazard.
-	// If given hazard does not exist it will return -1
+	// If given hazard does not exist it will return -1.0f
 	public float GetHazardCountDown(string hazardName) {
 		if(!hazardCountDown.ContainsKey(hazardName))
 			return -1.0f;
 		return hazardCountDown[hazardName];
+	}
+
+	// Sets a hazards current countdown time to a specific new value in seconds.
+	// If given hazard does not exist it will return -1
+	public int SetHazardCountDown(string hazardName, float newDuration) {
+		if(!hazardCountDown.ContainsKey(hazardName))
+			return -1;
+		hazardCountDown[hazardName] = newDuration;
+		return 1;
 	}
 
 	//------------------- Add/Remove methods -------------------
@@ -155,17 +191,26 @@ public class HazardChecker : MonoBehaviour {
 
 		// not really accurate timekeeping, gotta find out exact time for seconds per tick etc.?
 		if((lastTime + 1.0f) <= Time.time) {
+			Queue<string> toRemoveHazards = new Queue<string>();
+			stuff.text = "";
 			foreach(KeyValuePair<string,bool> entry in hazards) {
 				if(entry.Value) {
-					if(hazardCountDown[entry.Key] >= 1.0f)
-						hazardCountDown[entry.Key] -= 1.0f;
-					else if(hazardCountDown[entry.Key] < 1.0f) {
-						failureList.Add(entry.Key);
+					if(hazardCountDown[entry.Key] < 1.0f) {
+						failureList.Enqueue(entry.Key);
+						toRemoveHazards.Enqueue(entry.Key);
 						hazardCountDown[entry.Key] = hazardDuration[entry.Key];
-					}
+					} else if(hazardCountDown[entry.Key] >= 1.0f) {
+						hazardCountDown[entry.Key] -= 1.0f;
+						stuff.text += entry.Key.ToString() + " " + Convert.ToInt32(hazardCountDown[entry.Key]).ToString()+ "\n";
+					} 
 				}
 			}
+			while(toRemoveHazards.Count != 0)
+				hazards[toRemoveHazards.Dequeue()] = false;
 			lastTime = Time.time;
 		}
+		// Test
+		//if(GameOver())
+		//	stuff.text = "Game Over!";
 	}
 }
