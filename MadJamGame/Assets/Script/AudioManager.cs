@@ -11,8 +11,10 @@ public class AudioManager : MonoBehaviour {
 	
 	private static AudioManager instance = null;
 	public static AudioManager Instance {get {return instance; }}
-	
-	
+
+    public AudioClip clip;
+
+
 	void Awake () {
 		// Required for singleton
 		instance = this;
@@ -29,6 +31,10 @@ public class AudioManager : MonoBehaviour {
 	public void PlaySFX(){
 		if(FXMuted) return;
 		//Continue
+  
+        //currently randomely selects from the clip array
+        FXSource.clip = clip;
+        FXSource.Play();
 	}
 	
 	public void PlayMusic(){
