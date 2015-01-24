@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour {
 	private static AudioManager instance = null;
 	public static AudioManager Instance {get {return instance; }}
 	
+	
 	void Awake () {
 		// Required for singleton
 		instance = this;
