@@ -31,7 +31,6 @@ public class GuiManager : MonoBehaviour {
 	
 	public void OnEnterGameplay(){
 		TutorialScreen.SetActive(false);
-		GameScreen.SetActive(true);
 	}
 	
 	public void DebugDie(){
