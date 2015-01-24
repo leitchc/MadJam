@@ -26,10 +26,27 @@ public class GuiManager : MonoBehaviour {
 	public void OnPressPlay(){
 		TitleScreen.SetActive(false);
 		TutorialScreen.SetActive(true);
+		GameScreen.SetActive(true);
 	}
 	
 	public void OnEnterGameplay(){
 		TutorialScreen.SetActive(false);
 		GameScreen.SetActive(true);
+	}
+	
+	public void DebugDie(){
+		//GameScreen.SetActive(false);
+		DeathScreen.SetActive(true);
+	}
+	
+	public void Restart(){
+		DeathScreen.SetActive(false);
+		//GameScreen.SetActive(true);
+	}
+	
+	public void Quit(){
+		DeathScreen.SetActive(false);
+		GameScreen.SetActive(false);
+		TitleScreen.SetActive(true);
 	}
 }
