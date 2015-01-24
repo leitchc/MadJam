@@ -35,17 +35,18 @@ public class GuiManager : MonoBehaviour {
 	}
 	
 	public void DebugDie(){
-		GameScreen.SetActive(false);
+		//GameScreen.SetActive(false);
 		DeathScreen.SetActive(true);
 	}
 	
 	public void Restart(){
 		DeathScreen.SetActive(false);
-		GameScreen.SetActive(true);
+		//GameScreen.SetActive(true);
 	}
 	
 	public void Quit(){
 		DeathScreen.SetActive(false);
+		GameScreen.SetActive(false);
 		TitleScreen.SetActive(true);
 	}
 }
