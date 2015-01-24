@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour {
 	
-	public bool MusicMuted = false;
+	//Booleans that control if sfx or music are muted
+	public bool MscMuted = false;
+	//Both Btn and FX check if FX are muted - no need for third boolean
 	public bool FXMuted = false;
 	
-	public AudioSource MusicSource;
+	//Three audio sources loaded in the inspector. This is what plays all the audio.
+	public AudioSource MscSource;
+	public AudioSource BtnSource;
 	public AudioSource FXSource;
 	
+	//Reference by instance
 	private static AudioManager instance = null;
 	public static AudioManager Instance {get {return instance; }}
 
-    public AudioClip clip;
-
+	//The audio clips we want to play will all be loaded in here
+	public List<AudioClip> MscTracks;
+	public List<AudioClip> BtnTracks;
+	public List<AudioClip> FXTracks;
 
 	void Awake () {
 		// Required for singleton
@@ -25,20 +33,17 @@ public class AudioManager : MonoBehaviour {
 	}
 	
 	public void ToggleMuteMuisic(){
-		MusicMuted = !MusicMuted;
+		MscMuted = !MscMuted;
 	}
 	
 	public void PlaySFX(){
 		if(FXMuted) return;
 		//Continue
-  
-            //currently randomely selects from the clip array
-            FXSource.clip = clip;
-            FXSource.Play();
+  		
 	}
 	
 	public void PlayMusic(){
-		if(MusicMuted) return;
+		if(MscMuted) return;
 		//Continue
 	}
 	

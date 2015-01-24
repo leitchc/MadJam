@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +17,10 @@ public class HazardChecker : MonoBehaviour {
 
 	private static Dictionary<string, float> hazardCountDown = new Dictionary<string, float>();
 	private static Dictionary<string, float> hazardDuration = new Dictionary<string, float>();
-
+	
+	public float MinTimeBetweenHazards = 5f;
+	public float TimeSinceLastHazard = 0f;
+	
 	private static float lastTime = 0.0f;
 
 	private static HazardChecker hazardObj = null;
@@ -180,7 +183,9 @@ public class HazardChecker : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+			
+			TimeSinceLastHazard += Time.deltaTime;
+			
 		// If button is true/pressed and if corresponding hazard is running/exists, disable the hazard.
 		foreach(KeyValuePair<string,bool> entry in buttons) {
 			if(entry.Value && hazards[buttonAffects[entry.Key]]) {
@@ -212,5 +217,19 @@ public class HazardChecker : MonoBehaviour {
 		// Test
 		//if(GameOver())
 		//	stuff.text = "Game Over!";
+	}
+	
+	//This method checks when the last hazard spawned, and prevents or allows another hazard to spawn
+	public bool CanSpawnHazard(){
+		if(TimeSinceLastHazard >= MinTimeBetweenHazards){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	//INCOMPLETE Code to handle what happens when a hazard spawns - may need parameters
+	public void SpawnHazard(){
+		TimeSinceLastHazard = 0f;
 	}
 }
