@@ -51,6 +51,9 @@ public class ObstacleSpawner : MonoBehaviour {
 	public void HonkShip() {
 		if(alienShips.Count > 0) {
 			Transform alienShip = alienShips.Dequeue();
+			while(alienShip == null && alienShips.Count > 0) {
+				alienShip = alienShips.Dequeue();
+			}
 			if(alienShip != null) {
 				alienShip.GetComponent<AlienShip>().Honk();
 			}
