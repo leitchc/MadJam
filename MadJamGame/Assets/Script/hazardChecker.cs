@@ -5,14 +5,14 @@ using System;
 
 // Checks if button is pressed(in true state) and if corresponding hazard is also running(in true state)
 // it will set the corresponding hazard to false.
-public class hazardChecker : MonoBehaviour {
+public class HazardChecker : MonoBehaviour {
 
 	private static Dictionary<string, bool> hazards = new Dictionary<string, bool>();
 	private static Dictionary<string, string> buttonAffects = new Dictionary<string, string>();
 	private static Dictionary<string, bool> buttons = new Dictionary<string, bool>();
 
-	private static hazardChecker hazardObj = null;
-	public static hazardChecker Instance {get {return hazardObj;}}
+	private static HazardChecker hazardObj = null;
+	public static HazardChecker Instance {get {return hazardObj;}}
 
     // Use this for initialization
     void Awake () {
@@ -22,12 +22,12 @@ public class hazardChecker : MonoBehaviour {
 	//----------------------------- Check methods -------------------------
 
 	// Checks if hazard exists in internal dictionary, true if it exist, false if it does not.
-	public bool hazardExist(string hazardName) {
+	public bool HazardExist(string hazardName) {
 		return hazards.ContainsKey(hazardName);
 	}
 
 	// Checks if button exists in internal dictionary, true if it exist, false if it does not.
-	public bool buttonExist(string buttonName) {
+	public bool ButtonExist(string buttonName) {
 		return hazards.ContainsKey(buttonName);
 	}
 
@@ -36,7 +36,7 @@ public class hazardChecker : MonoBehaviour {
 	// Get hazard if it is active or not (true or false respectively)
 	// Makes use of Convert.ToInt32 which returns 1 when true and 0 when false.
 	// If given hazard does not exist it will return -1
-	public int getHazardState(string hazardName) {
+	public int GetHazardState(string hazardName) {
 		if(!hazards.ContainsKey(hazardName))
 			return -1;
 		return Convert.ToInt32(hazards[hazardName]);
@@ -45,7 +45,7 @@ public class hazardChecker : MonoBehaviour {
 	// Get button if it is pressed or not (true or false respectively)
 	// Makes use of Convert.ToInt32 which returns 1 when true and 0 when false.
 	// If given button does not exist it will return -1
-	public int getButtonState(string buttonName) {
+	public int GetButtonState(string buttonName) {
 		if(!hazards.ContainsKey(buttonName))
 			return -1;
 		return Convert.ToInt32(hazards[buttonName]);
@@ -53,7 +53,7 @@ public class hazardChecker : MonoBehaviour {
 
 	// Returns which hazard the button has an effect on. 
 	// If given button does not exist it will return an empty string ""
-	public string buttonAffectsWhichHazard(string buttonName) {
+	public string ButtonAffectsWhichHazard(string buttonName) {
 		if(!hazards.ContainsKey(buttonName))
 			return "";
 		return buttonAffects[buttonName];
@@ -62,7 +62,7 @@ public class hazardChecker : MonoBehaviour {
 	//-------------------------- Add/Remove methods -------------------------
 
 	// Adds a hazard. Returns -1 when given hazard name already exists.
-	public int addHazard(string hazardName) {
+	public int AddHazard(string hazardName) {
 		if(hazards.ContainsKey(hazardName))
 			return -1;
 		hazards.Add(hazardName, false);
@@ -71,7 +71,7 @@ public class hazardChecker : MonoBehaviour {
 
 	// Adds a button with the hazard it affects as 2nd parameter.
 	// Returns -1 when given buttonname already exists.
-	public int addButton(string buttonName, string buttonAffectsHazard) {
+	public int AddButton(string buttonName, string buttonAffectsHazard) {
 		if(buttons.ContainsKey(buttonName))
 			return -1;
 		buttons.Add(buttonName, false);
@@ -80,7 +80,7 @@ public class hazardChecker : MonoBehaviour {
 	}
 
 	// Removes a hazard. Returns -1 when given hazard does not exists.
-	public int removeHazard(string hazardName) {
+	public int RemoveHazard(string hazardName) {
 		if(!hazards.ContainsKey(hazardName))
 			return -1;
 		hazards.Remove(hazardName);
@@ -88,7 +88,7 @@ public class hazardChecker : MonoBehaviour {
 	}
 
 	// Removes a button. Returns -1 when given button does not exists.
-	public int removeButton(string buttonName) {
+	public int RemoveButton(string buttonName) {
 		if(!buttons.ContainsKey(buttonName))
 			return -1;
 		buttons.Remove(buttonName);
