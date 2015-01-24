@@ -229,7 +229,8 @@ public class HazardChecker : MonoBehaviour {
 	}
 	
 	//INCOMPLETE Code to handle what happens when a hazard spawns - may need parameters
-	public void SpawnHazard(){
+	public void SpawnHazard(string hazard){
 		TimeSinceLastHazard = 0f;
+		SetHazardState(hazard, true);
 	}
 }
