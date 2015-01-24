@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Ship : MonoBehaviour {
 	
+	public float MaxHP = 50;
 	public float HP = 50f;
 	
 	// Use this for initialization
@@ -18,7 +19,11 @@ public class Ship : MonoBehaviour {
 	public void TakeDamage(float Damage){
 		HP -= Damage;
 		if(HP <= 0f){
-			//die
+			GuiManager.Instance.PlayerDeath();
 		}
+	}
+	
+	public void HPRefil(){
+		HP = MaxHP;
 	}
 }

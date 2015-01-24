@@ -25,7 +25,7 @@ public class GuiManager : MonoBehaviour {
 	
 	public void OnPressPlay(){
 		TitleScreen.SetActive(false);
-		TutorialScreen.SetActive(true);
+		//TutorialScreen.SetActive(true);
 		GameScreen.SetActive(true);
 	}
 	
@@ -38,8 +38,14 @@ public class GuiManager : MonoBehaviour {
 		DeathScreen.SetActive(true);
 	}
 	
+	public void PlayerDeath(){
+		DeathScreen.SetActive(true);
+	}
+	
 	public void Restart(){
 		DeathScreen.SetActive(false);
+		Ship tmp = GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>();
+		tmp.HPRefil();
 		//GameScreen.SetActive(true);
 	}
 	
