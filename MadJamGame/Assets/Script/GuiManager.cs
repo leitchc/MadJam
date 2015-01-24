@@ -8,8 +8,6 @@ public class GuiManager : MonoBehaviour {
 	public GameObject DeathScreen;
 	public GameObject TutorialScreen;
 	
-	private bool temp;
-	
 	private static GuiManager instance = null;
 	public static GuiManager Instance {get {return instance; }}
 	
