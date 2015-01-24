@@ -22,6 +22,9 @@ public class HazardChecker : MonoBehaviour {
 	private static HazardChecker hazardObj = null;
 	public static HazardChecker Instance {get {return hazardObj;}}
 
+	// Howmany mistakes you're allowed to do until Game Over.
+	public int ChancesTillLose = 0;
+
     // Use this for initialization
     void Awake () {
         hazardObj = this;
@@ -41,7 +44,7 @@ public class HazardChecker : MonoBehaviour {
 
 	// Check if the failure list contains something, if so GAME OVER!
 	public bool GameOver() {
-		return (failureList.Count > 0);
+		return (failureList.Count > ChancesTillLose);
 	}
 
 	//------------------- Access methods -------------------
