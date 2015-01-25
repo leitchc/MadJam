@@ -17,9 +17,13 @@ public class SelfDestructButton : ShipButton
 	
 	}
 
+
     public void Explode() {
 
         //yield return new WaitForSeconds(2);
+
+        soundSource.clip = buttonSound;
+        soundSource.Play();
 
         GameObject main = GameObject.Find("Main");
         GuiManager guiManager = (GuiManager)main.GetComponent(typeof(GuiManager));
