@@ -24,10 +24,11 @@ public class ObstacleSpawner : MonoBehaviour {
 	public float SpawnSpamLimiter = 0.4f;
 	public float TryToSpawn = 0f;
 	
-	public bool spawnAsteroids = false;
 	public float spawnChanceAsteroids = 5f;
-	public bool spawnShips = false;
 	public float spawnChanceShips = 5f;
+
+	private bool spawnShips = false;
+	private bool spawnAsteroids = false;
 	
 	public static Queue<Transform> alienShips;
 

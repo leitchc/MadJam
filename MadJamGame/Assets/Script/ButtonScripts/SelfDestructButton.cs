@@ -7,6 +7,7 @@ public class SelfDestructButton : ShipButton
     public AudioClip explosionButtonSound;
     public AudioSource explosionSoundSource;
 
+    private bool isRunning = false;
 	// Use this for initialization
 	void Start () {
 	
@@ -26,10 +27,18 @@ public class SelfDestructButton : ShipButton
         soundSource.Play();
 
         GameObject main = GameObject.Find("Main");
-        GuiManager guiManager = (GuiManager)main.GetComponent(typeof(GuiManager));
-        guiManager.PlayerDeath();
 
         explosionSoundSource.clip = explosionButtonSound;
         explosionSoundSource.Play();
+
+        if(!isRunning) {
+            StartCoroutine(LoadSelfDestruct());
+        }
+    }
+
+    IEnumerator LoadSelfDestruct() {
+        isRunning = true;
+        yield return new WaitForSeconds(1.0f);
+        Application.LoadLevel("shipexplode");
     }
 }
