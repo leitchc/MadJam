@@ -22,10 +22,16 @@ public class AudioManager : MonoBehaviour {
 	public List<AudioClip> MscTracks;
 	public List<AudioClip> BtnTracks;
 	public List<AudioClip> FXTracks;
+	public List<AudioClip> HornTracks;
 
 	void Awake () {
 		// Required for singleton
 		instance = this;
+		
+		Object[] tmp = Resources.LoadAll("ShipHorn");
+		foreach (AudioClip a in tmp){
+			HornTracks.Add(a);
+		}
 	}
 	
 	public void ToggleMuteFX(){
@@ -40,6 +46,13 @@ public class AudioManager : MonoBehaviour {
 		if(FXMuted) return;
 		//Continue
   		
+	}
+	
+	public void PlayHorn(){
+		//muted yaddayadda
+		AudioClip tmp = HornTracks[Random.Range(0,HornTracks.Count)];
+		FXSource.clip = tmp;
+		FXSource.Play();
 	}
 	
 	public void PlayMusic(){
