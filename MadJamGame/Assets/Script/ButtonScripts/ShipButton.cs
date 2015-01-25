@@ -4,6 +4,7 @@ using System.Collections;
 public class ShipButton : MonoBehaviour {
 
     public AudioClip buttonSound;
+    public AudioSource soundSource;
     public Hazard hazard;
     public string b_name;
     
@@ -27,6 +28,9 @@ public class ShipButton : MonoBehaviour {
 	
 	public void Clicked(){
 		if(state)return;
+
+        soundSource.clip = buttonSound;
+        soundSource.Play();
 		
 		state = true;
 		if(hazard.isActive){
