@@ -4,7 +4,7 @@ using System.Collections;
 
 public class FireEffect : MonoBehaviour
 {
-
+    public Hazard fire;
     public GameObject particleSys;
     // horizontal screen: -0.46  to 0.46
     // vertical screen is: -0.19 to 0.27
@@ -33,7 +33,7 @@ public class FireEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (HazardChecker.Instance.GetHazardState("Fire Detected") == 1)
+        if (fire.isActive == true)
         {
             if (!runOnce)
             {
