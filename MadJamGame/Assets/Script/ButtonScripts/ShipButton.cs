@@ -32,6 +32,8 @@ public class ShipButton : MonoBehaviour {
 		if(hazard.isActive){
 			hazard.isActive = false;
 			HazardChecker.Instance.SetHazardState(hazard.h_name, false);
+			HazardChecker.Instance.SetHazardCountDown(hazard.h_name, hazard.TimeToFailure);
+			hazard.TimeActive = 0f;
 		}
 	}
 }
