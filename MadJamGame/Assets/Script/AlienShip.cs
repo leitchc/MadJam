@@ -26,6 +26,11 @@ public class AlienShip : MonoBehaviour {
     		transform.Find("Vehicle").LookAt(avoidLocation);
     		transform.position = Vector3.MoveTowards(transform.position, avoidLocation, step);
     	}
+
+    	// When reaching the end destination, destroy self
+    	if(Vector3.Distance(transform.position, avoidLocation) < 2.0f) {
+    		Destroy(gameObject);
+    	}
 	}
 
 	

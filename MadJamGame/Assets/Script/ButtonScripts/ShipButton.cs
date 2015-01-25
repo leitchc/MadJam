@@ -4,6 +4,7 @@ using System.Collections;
 public class ShipButton : MonoBehaviour {
 
     public AudioClip buttonSound;
+    public AudioSource soundSource;
     public Hazard hazard;
     public string b_name;
     
@@ -27,11 +28,17 @@ public class ShipButton : MonoBehaviour {
 	
 	public void Clicked(){
 		if(state)return;
+
+        soundSource.clip = buttonSound;
+        soundSource.Play();
 		
+		HazardChecker.Instance.SetButtonState(b_name, true);
 		state = true;
 		if(hazard.isActive){
 			hazard.isActive = false;
 			HazardChecker.Instance.SetHazardState(hazard.h_name, false);
+			HazardChecker.Instance.SetHazardCountDown(hazard.h_name, hazard.TimeToFailure);
+			hazard.TimeActive = 0f;
 		}
 	}
 }

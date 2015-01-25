@@ -18,6 +18,13 @@ public class Asteroid : MonoBehaviour {
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 	}
+	
+	void OnMouseDown(){
+		if(explosion != null) {
+			Instantiate(explosion, transform.position, transform.rotation);
+		}
+		Destroy(gameObject);
+	}
 
 	void OnTriggerEnter(Collider other) {
 
