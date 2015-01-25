@@ -5,8 +5,10 @@ using System.Collections;
 public class StartGame : MonoBehaviour {
 
 	public Animator anim;
+	public ShakeEffect shakeEffect;
 	public ChangeAlpha fadeWhite;
 	public ChangeAlpha fadeBlack;
+	public GameObject ship;
 	public GameObject tunnel;
 	public GameObject starField;
 	public Button quitButton;
@@ -28,6 +30,10 @@ public class StartGame : MonoBehaviour {
 
 		yield return new WaitForSeconds(2.0f);
 
+		if(shakeEffect) {
+			shakeEffect.enabled = true;
+		}
+		ship.SetActive(true);
 		tunnel.SetActive(true);
 		starField.SetActive(false);
 		fadeWhite.ToTransparent();
