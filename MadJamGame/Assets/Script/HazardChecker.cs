@@ -20,6 +20,8 @@ public class HazardChecker : MonoBehaviour {
 	
 	public float MinTimeBetweenHazards = 5f;
 	public float TimeSinceLastHazard = 0f;
+	public float DifficultyTimer;
+	public float DifficultyIncrement = 30f;
 	
 	private static float lastTime = 0.0f;
 
@@ -37,9 +39,7 @@ public class HazardChecker : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		// A test.
-		//HazardChecker.Instance.AddHazard("no sleep", 15.0f);
-		//HazardChecker.Instance.SetHazardState("no sleep", true);
+		DifficultyTimer = DifficultyIncrement;
     }
 
 	//------------------- Check if Exist methods -------------------
@@ -129,6 +129,15 @@ public class HazardChecker : MonoBehaviour {
 		hazardCountDown[hazardName] = newDuration;
 		return 1;
 	}
+	
+	// Sets a hazards current countdown time to a specific new value in seconds.
+	// If given hazard does not exist it will return -1
+	public int SetHazardDuration(string hazardName, float newDuration) {
+		if(!hazardCountDown.ContainsKey(hazardName))
+			return -1;
+		hazardDuration[hazardName] = newDuration;
+		return 1;
+	}
 
 	//------------------- Add/Remove methods -------------------
 
@@ -184,6 +193,11 @@ public class HazardChecker : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 			
+		if(Time.timeSinceLevelLoad >= DifficultyTimer){
+			IncreaseDifficulty();
+			DifficultyTimer += DifficultyIncrement;
+		}
+			
 			TimeSinceLastHazard += Time.deltaTime;
 			
 		// If button is true/pressed and if corresponding hazard is running/exists, disable the hazard.
@@ -232,5 +246,10 @@ public class HazardChecker : MonoBehaviour {
 	public void SpawnHazard(string hazard){
 		TimeSinceLastHazard = 0f;
 		SetHazardState(hazard, true);
+	}
+	
+	private void IncreaseDifficulty(){
+		if(MinTimeBetweenHazards <= 10f) MinTimeBetweenHazards--;
+		else MinTimeBetweenHazards = MinTimeBetweenHazards * 0.9f;
 	}
 }
