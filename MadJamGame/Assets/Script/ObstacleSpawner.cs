@@ -7,6 +7,7 @@ public class ObstacleSpawner : MonoBehaviour {
 	public Transform target;	// The target for the spawnees
 	public Transform[] asteroids;	// The asteroids to be spawned
 	public Transform[] ships;	// The ships to be spawned
+	public ShakeEffect shakeEffect;
 	public float xMin = -12.0f;	// The x minimum position of where they can be
 	public float xMax = 12.0f;	// The x maximum position of where they can be
 	public float rateOfSpawn = 5.0f;	// The rate of spawn
@@ -32,14 +33,19 @@ public class ObstacleSpawner : MonoBehaviour {
 				Transform asteroid = Instantiate(asteroids[Random.Range(0, asteroids.Length)], 
 				new Vector3(Random.Range(xMin, xMax), transform.position.y, transform.position.z), Quaternion.identity) as Transform;
 
-				asteroid.GetComponent<Asteroid>().target = target;
+				Asteroid asteroidScript = asteroid.GetComponent<Asteroid>();
+				asteroidScript.target = target;
+				asteroidScript.shakeObject = shakeEffect;
 				asteroid.GetChild(0).GetComponent<Tumble>().tumbleSpeed = Random.Range(1.0f, 5.0f);
 			}
 			if(spawnShips) {
 				Transform ship = Instantiate(ships[Random.Range(0, ships.Length)],
 					new Vector3(Random.Range(xMin, xMax), transform.position.y, transform.position.z), Quaternion.identity) as Transform;
 
-				ship.GetComponent<AlienShip>().target = target;
+				AlienShip shipScript = ship.GetComponent<AlienShip>();
+
+				shipScript.target = target;
+				shipScript.shakeObject = shakeEffect;
 				alienShips.Enqueue(ship);
 			}
 
