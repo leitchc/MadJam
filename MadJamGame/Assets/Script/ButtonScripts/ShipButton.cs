@@ -28,6 +28,7 @@ public class ShipButton : MonoBehaviour {
 	public void Clicked(){
 		if(state)return;
 		
+		HazardChecker.Instance.SetButtonState(b_name, true);
 		state = true;
 		if(hazard.isActive){
 			hazard.isActive = false;
