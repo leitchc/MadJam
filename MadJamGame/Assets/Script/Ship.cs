@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Ship : MonoBehaviour {
 	
 	public float MaxHP = 50;
 	public float HP = 50f;
+	public Image healthBar;
 	
 	// Use this for initialization
 	void Start () {
@@ -13,7 +15,7 @@ public class Ship : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		healthBar.fillAmount = HP/MaxHP;
 	}
 	
 	public void TakeDamage(float Damage){
@@ -26,8 +28,7 @@ public class Ship : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider col){
-		HP -= 10;
-		CheckDead();
+		TakeDamage(10.0f);
 	}
 	
 	public void CheckDead(){
