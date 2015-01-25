@@ -24,10 +24,10 @@ public class GuiManager : MonoBehaviour {
 	}
 	
 	public void Restart(){
-		Application.LoadLevel(1);
+		Application.LoadLevel(Application.loadedLevelName);
 	}
 	
 	public void Quit(){
-		Application.LoadLevel(0);
+		Application.LoadLevel("Menu");
 	}
 }
