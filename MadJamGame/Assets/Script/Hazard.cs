@@ -74,7 +74,7 @@ public class Hazard : MonoBehaviour {
 		}
 	}
 	
-	private void Activate(){
+	public void Activate(){
 		if(HazardChecker.Instance.CanSpawnHazard()){
 			float i = Random.value;
 			i = i*100;
@@ -85,7 +85,7 @@ public class Hazard : MonoBehaviour {
 		}
 	}
 	
-	private void IncreaseDifficulty(){
+	public void IncreaseDifficulty(){
 		if(SpawnChance < 50f)SpawnChance += 10f;
 		else if(SpawnChance < 100f)SpawnChance = SpawnChance * 1.1f;
 		else SpawnChance = 100f;

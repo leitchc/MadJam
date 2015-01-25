@@ -248,6 +248,10 @@ public class HazardChecker : MonoBehaviour {
 		SetHazardState(hazard, true);
 	}
 	
+	public void SpawnFromSpawner(){
+		TimeSinceLastHazard = 0f;
+	}
+	
 	private void IncreaseDifficulty(){
 		if(MinTimeBetweenHazards <= 10f) MinTimeBetweenHazards--;
 		else MinTimeBetweenHazards = MinTimeBetweenHazards * 0.9f;
